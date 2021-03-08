@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CircularProgressBar">
+        <attr name="kan_progress" format="integer" />
+        <attr name="kan_progress_max" format="integer" />
+        <attr name="kan_progressbar_color" format="color" />
+        <attr name="kan_progressbar_color_start" format="color" />
+        <attr name="kan_progressbar_color_end" format="color" />
+
+        <attr name="kan_background_progressbar_color" format="color" />
+        <attr name="kan_background_progressbar_color_start" format="color" />
+        <attr name="kan_background_progressbar_color_end" format="color" />
+
+        <attr name="kan_progressbar_width" format="dimension" />
+        <attr name="kan_background_progressbar_width" format="dimension" />
+        <attr name="kan_start_angle" format="float" />
+        <attr name="kan_progress_direction">
+            <flag name="to_right" value="1" />
+            <flag name="to_left" value="2" />
+        </attr>
+    </declare-styleable>
+
+</resources>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="default_stroke_width">7dp</dimen>
+    <dimen name="default_background_stroke_width">3dp</dimen>
+
+    <dimen name="pause_bar_width">6dp</dimen>
+    <dimen name="pause_bar_distance">6dp</dimen>
+    <dimen name="pause_bar_height">14dp</dimen>
+
+</resources>

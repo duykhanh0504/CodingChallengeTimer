@@ -1,0 +1,104 @@
+ext {
+    //App Id
+    appId = "jp.co.ntt_finance.lifenoteapp"
+    testInstrumentationRunner = "android.support.test.runner.AndroidJUnitRunner"
+
+    //App version
+    appCompileSdkVersion = 29
+    appMinSdkVersion = 24
+    appTargetSdkVersion = 29
+    appMajorVersion = 1
+    appMinorVersion = 0
+    appHotfixVersion = 0
+    appVersionCode = 1
+    appVersionName = "${appMajorVersion}.${appMinorVersion}.${appHotfixVersion}"
+
+    //Version library
+    supportLibrary = '1.0.0'
+    materialLibrary = '1.1.0'
+    constraintLibrary = '1.1.3'
+    appcompatLibrary = '1.1.0'
+    annotationLibrary = '1.1.0'
+    vectordrawableLibrary = '1.1.0'
+    coreLibrary = '1.1.0'
+    junitLibrary = '4.12'
+    runnerLibrary = '1.2.0'
+    espressoCoreLibrary = '3.2.0'
+    materialLibrary = '1.2.0-alpha05'
+
+    //Development
+    leakCanaryLibrary = '2.4'
+
+    kotlinCoroutinesLibrary = '1.1.1'
+    javaxInjectLibrary = '1'
+    eventbus = '3.1.1'
+    gsonLibrary = "2.8.2"
+    architectureLibrary = "2.1.0"
+    daggerLibrary = '2.33'
+    junittest = "1.1.1"
+    mockitoandroid = "3.1.0"
+
+    //Support Libraries dependencies
+    supportDependencies = [
+            design           : "com.android.support:design:${supportLibrary}",
+            material         : "com.google.android.material:material:${materialLibrary}",
+            recyclerView     : "androidx.recyclerview:recyclerview:${supportLibrary}",
+            cardView         : "androidx.cardview:cardview:${supportLibrary}",
+            appCompat        : "androidx.appcompat:appcompat:${appcompatLibrary}",
+            constraintLibrary: "androidx.constraintlayout:constraintlayout:${constraintLibrary}",
+            annotation       : "androidx.annotation:annotation:${annotationLibrary}",
+            browser          : "androidx.browser:browser:${supportLibrary}",
+            exifInterface    : "androidx.exifinterface:exifinterface:${supportLibrary}",
+            vectorDrawable   : "androidx.vectordrawable:vectordrawable:${vectordrawableLibrary}",
+            gridLayout       : "androidx.gridlayout:gridlayout:${supportLibrary}",
+            core             : "androidx.core:core:${coreLibrary}"
+    ]
+
+    //architecture Libraries dependencies
+    architectureDependencies = [
+            extensions    : "androidx.lifecycle:lifecycle-extensions:${architectureLibrary}",
+            viewmodel     : "androidx.lifecycle:lifecycle-viewmodel:${architectureLibrary}",
+            livedata      : "androidx.lifecycle:lifecycle-livedata:${architectureLibrary}",
+            compiler      : "androidx.lifecycle:lifecycle-compiler:${architectureLibrary}",
+            dagger        : "com.google.dagger:dagger:${daggerLibrary}",
+            daggerCompiler: "com.google.dagger:dagger-compiler:${daggerLibrary}",
+            javaxInject   : "javax.inject:javax.inject:${javaxInjectLibrary}",
+            eventBus      : "org.greenrobot:eventbus:${eventbus}"
+    ]
+
+    //kotlin Libraries dependencies
+    kotlinDependencies = [
+            kotlin                 : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version",
+            kotlinCoroutines       : "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCoroutinesLibrary",
+            kotlinCoroutinesAndroid: "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlinCoroutinesLibrary"
+    ]
+
+    //Test Unit Libraries dependencies
+    unitTestDependencies = [
+            junit : "junit:junit:${junitLibrary}",
+            junitx: "androidx.test.ext:junit:${junittest}",
+            mockito: "org.mockito:mockito-android:${mockitoandroid}"
+    ]
+
+    //Test Android Libraries dependencies
+    acceptanceTestDependencies = [
+            runner         : "androidx.test:runner:${runnerLibrary}",
+            truth          : "androidx.test.ext:truth:${runnerLibrary}",
+            rules          : "androidx.test:rules:${runnerLibrary}",
+            espressoCore   : "androidx.test.espresso:espresso-core:${espressoCoreLibrary}",
+            espressoIntent : "androidx.test.espresso:espresso-intents:${espressoCoreLibrary}",
+            espressoWeb    : "androidx.test.espresso:espresso-web:${espressoCoreLibrary}",
+            espressoContrib: "androidx.test.espresso:espresso-contrib:${espressoCoreLibrary}"
+    ]
+
+    //Api Libraries dependencies
+    apiDependencies = [
+            gson              : "com.google.code.gson:gson:${gsonLibrary}"
+    ]
+
+    //development Libraries dependencies
+    developmentDependencies = [
+            leakCanary    : "com.squareup.leakcanary:leakcanary-android:${leakCanaryLibrary}",
+            leakCanaryNoop: "com.squareup.leakcanary:leakcanary-android-no-op:${leakCanaryLibrary}"
+    ]
+}

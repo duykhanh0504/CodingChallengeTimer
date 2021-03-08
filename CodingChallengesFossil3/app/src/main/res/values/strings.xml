@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Coding Challenges Fossil 3</string>
+    <string name="app_short_name">Basic Timer</string>
+    <string name="start">Start</string>
+    <string name="timer">Timer</string>
+    <string name="time_expired">Time Expired</string>
+    <string name="dismiss">Dismiss</string>
+</resources>
