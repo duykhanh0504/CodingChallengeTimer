@@ -82,14 +82,14 @@ class RuntimeTypeAdapterFactory<T> private constructor(
                 if (labelJsonElement == null) {
                     throw JsonParseException(
                         "cannot deserialize " + baseType
-                                + " because it does not define a field named " + typeFieldName
+                            + " because it does not define a field named " + typeFieldName
                     )
                 }
                 val label = labelJsonElement.asString
                 val delegate = labelToDelegate[label] as TypeAdapter<R>?
                     ?: throw JsonParseException(
                         "cannot deserialize " + baseType + " subtype named "
-                                + label + "; did you forget to register a subtype?"
+                            + label + "; did you forget to register a subtype?"
                     )
                 return delegate.fromJsonTree(jsonElement)
             }
@@ -104,7 +104,7 @@ class RuntimeTypeAdapterFactory<T> private constructor(
                 val delegate = subtypeToDelegate[srcType] as TypeAdapter<R>?
                     ?: throw JsonParseException(
                         "cannot serialize " + srcType.name
-                                + "; did you forget to register a subtype?"
+                            + "; did you forget to register a subtype?"
                     )
                 val jsonObject = delegate.toJsonTree(value).asJsonObject
                 if (maintainType) {
@@ -115,7 +115,7 @@ class RuntimeTypeAdapterFactory<T> private constructor(
                 if (jsonObject.has(typeFieldName)) {
                     throw JsonParseException(
                         "cannot serialize " + srcType.name
-                                + " because it already defines a field named " + typeFieldName
+                            + " because it already defines a field named " + typeFieldName
                     )
                 }
                 clone.add(typeFieldName, JsonPrimitive(label))

@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.kan.codingchallengesfossil3">
 
-    <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
@@ -12,9 +11,7 @@
         android:name="android.permission.ACCESS_NETWORK_STATE"
         tools:node="remove" />
 
-    <uses-permission
-        android:name="android.permission.USE_FINGERPRINT"
-        tools:node="remove" />
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
 
     <application
         android:name=".application.BaseApplication"
@@ -24,22 +21,28 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CodingChallengesFossil3">
-        <activity android:name="com.kan.codingchallengesfossil3.feature.main.MainActivity"
-            android:launchMode="singleTask">
+        <activity
+            android:name="com.kan.codingchallengesfossil3.feature.main.MainActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
                 <action android:name="android.intent.action.SHOW_ALARMS" />
+                <category android:name="android.intent.category.LAUNCHER" />
                 <category android:name="android.intent.category.DEFAULT" />
 
             </intent-filter>
         </activity>
 
 
-        <service android:name="com.kan.codingchallengesfossil3.feature.service.TimerService"/>
+        <activity
+            android:name="com.kan.codingchallengesfossil3.feature.main.setting.SettingActivity"
+            android:screenOrientation="portrait" />
 
-        <receiver android:name="com.kan.codingchallengesfossil3.feature.receiver.TimerReceiver"/>
+        <receiver android:name="com.kan.codingchallengesfossil3.feature.receiver.TimerReceiver" />
+
+        <service android:name="com.kan.codingchallengesfossil3.feature.service.TimerService" />
 
     </application>
 

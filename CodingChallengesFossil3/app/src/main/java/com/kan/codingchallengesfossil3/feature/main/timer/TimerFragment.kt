@@ -10,7 +10,12 @@ import com.kan.codingchallengesfossil3.feature.main.MainComponent
 import com.kan.codingchallengesfossil3.feature.main.MainViewModel
 import com.kan.codingchallengesfossil3.feature.navigation.Navigator
 import com.kan.codingchallengesfossil3.model.StateEvent
+import com.kan.codingchallengesfossil3.utils.ResourceUtil
 import kotlinx.android.synthetic.main.fragment_picker.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -30,6 +35,7 @@ class TimerFragment : BaseFragment() {
         const val MIN_PICKTIME = 0
         const val MAX_PICKTIME = 99
         const val FORMAT_DIGIT = "%02d"
+        const val TIME_DURATION = 1000L
         fun newInstance(): TimerFragment =
             TimerFragment()
     }
@@ -77,17 +83,18 @@ class TimerFragment : BaseFragment() {
 
         btnStop.setOnSafeClickListener {
             stopTimer()
-            btnStart.isSelected = false
+            btnStart.isChecked = false
         }
 
         btnStart.setOnSafeClickListener {
-            btnStart.isSelected = !it.isSelected
+            btnStart.isChecked = btnStart.isChecked
             mainViewModel.currentState = requireActivity().config.timerState
             val hours = numberPickerHour.value
             val minutes = numberPickerMinute.value
             val seconds = numberPickerSecond.value
             val totalSecond = (hours * 3600 + minutes * 60 + seconds).toLong()
             requireActivity().config.timerSeconds = totalSecond
+            totalTime.text = ResourceUtil.getString(R.string.total, totalSecond)
             mainViewModel.totalSecondTime = totalSecond
 
             when (mainViewModel.currentState) {
@@ -112,26 +119,40 @@ class TimerFragment : BaseFragment() {
             is StateEvent.Running -> {
                 rlContentCalendar.invisible()
                 btnStop.visible()
+                llTimerContent.visible()
             }
             is StateEvent.Idle -> {
                 rlContentCalendar.visible()
                 btnStop.invisible()
+                llTimerContent.invisible()
+                btnStart.isChecked = false
             }
 
             is StateEvent.Paused -> {
                 rlContentCalendar.invisible()
                 btnStop.visible()
+                llTimerContent.visible()
+                btnStart.isChecked = true
+                mainViewModel.updateTimer(state.tick.div(1000F).roundToLong())
+                totalTime.text = ResourceUtil.getString(R.string.total, mainViewModel.totalSecondTime)
+                circularProgressBar.setProgressWithAnimation(
+                    state.tick.div(requireActivity().config.timerSeconds.secondsToMillis.toFloat()) * 100,
+                    1000
+                )
             }
 
             is StateEvent.Finish -> {
-                rlContentCalendar.visible()
+                rlContentCalendar.invisible()
                 btnStop.invisible()
+                llTimerContent.visible()
             }
 
             is StateEvent.Finished -> {
-                rlContentCalendar.invisible()
+                rlContentCalendar.visible()
+                llTimerContent.visible()
                 btnStop.invisible()
             }
+            else -> Unit
         }
     }
 
@@ -162,13 +183,16 @@ class TimerFragment : BaseFragment() {
     fun onMessageEvent(state: StateEvent.Finished) {
         timerTime.text = 0.getFormattedDuration()
         circularProgressBar.progress = 0f
-        updateViewStates(state)
+        GlobalScope.launch(Dispatchers.Main) {
+            delay(TIME_DURATION)
+            EventBus.getDefault().post(StateEvent.Idle)
+        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onMessageEvent(state: StateEvent.Finish) {
         timerTime.text = 0.getFormattedDuration()
-        circularProgressBar.progress = 0f
+        circularProgressBar.setProgressWithAnimation(0f, 500L)
         updateViewStates(state)
     }
 

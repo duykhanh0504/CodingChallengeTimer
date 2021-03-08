@@ -2,6 +2,7 @@ package com.kan.codingchallengesfossil3.di
 
 import android.content.Context
 import com.kan.codingchallengesfossil3.application.BaseApplication
+import com.kan.codingchallengesfossil3.feature.main.setting.SettingActivity
 import dagger.Component
 import org.greenrobot.eventbus.EventBus
 import javax.inject.Singleton
@@ -34,5 +35,10 @@ interface ApplicationComponent {
      * @return [EventBus] data type
      */
     fun getEventBus(): EventBus
+
+    /**
+     * inject SettingActivity
+     */
+    fun inject(activity: SettingActivity)
 
 }

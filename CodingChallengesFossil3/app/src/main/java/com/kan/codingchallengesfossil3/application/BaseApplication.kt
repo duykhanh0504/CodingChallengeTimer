@@ -94,7 +94,7 @@ class BaseApplication : Application(), LifecycleObserver {
 
     fun handleFinish(event: StateEvent.Finish) {
         val pendingIntent = getOpenTimerTabIntent()
-        val notification = getTimerNotification(pendingIntent, false)
+        val notification = getTimerNotification(pendingIntent)
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.notify(TIMER_NOTIF_ID, notification)
 
@@ -102,7 +102,7 @@ class BaseApplication : Application(), LifecycleObserver {
     }
 
     fun handleFinished(state: StateEvent.Finished) {
-        config.timerState = state
+        config.timerState = StateEvent.Idle
     }
 
     fun handlePause(event: StateEvent.Pause) {

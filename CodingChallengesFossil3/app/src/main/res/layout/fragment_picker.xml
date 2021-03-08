@@ -1,24 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_gravity="center_vertical">
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintTop_toTopOf="parent"
+        android:foregroundGravity="center"
         app:layout_constraintDimensionRatio="1:1"
-        android:foregroundGravity="center">
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:id="@+id/llTimerContent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/timerTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:textAlignment="center"
+                android:text="00:00:00"
+                android:textSize="@dimen/font_largest" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/totalTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:textAlignment="center"
+                android:text="@string/dismiss"
+                android:textSize="@dimen/font_normal" />
+        </LinearLayout>
 
         <RelativeLayout
             android:id="@+id/rlContentCalendar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_centerHorizontal="true">
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center">
 
             <NumberPicker
                 android:id="@+id/numberPickerHour"
@@ -45,65 +70,55 @@
             android:id="@+id/circularProgressBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintDimensionRatio="1:1"
+            android:layout_margin="@dimen/spacing_large"
             app:kan_background_progressbar_color="#b6bbd8"
-            app:kan_background_progressbar_width="5dp"
-            android:layout_margin="24dp"
-            app:kan_progress_direction="to_left"
+            app:kan_background_progressbar_width="@dimen/bg_progress_bar_width"
             app:kan_progress="100"
+            app:kan_progress_direction="to_left"
             app:kan_progressbar_color="#3f51b5"
-            app:kan_progressbar_width="10dp" />
-
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/timerTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="?attr/selectableItemBackground"
-            android:layout_gravity="center"
-            android:text="00:00:00" />
+            app:kan_progressbar_width="@dimen/progress_bar_width"
+            app:layout_constraintDimensionRatio="1:1" />
 
     </FrameLayout>
 
 
-    <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/btnStop"
-        android:layout_width="65dp"
-        android:layout_height="65dp"
-        android:layout_marginLeft="24dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="24dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/btnStart"
-        android:background="@drawable/ic_stop_circle"
-        android:layout_alignParentBottom="true" />
-
-    <androidx.appcompat.widget.AppCompatToggleButton
+    <ToggleButton
         android:id="@+id/btnStart"
         android:layout_width="65dp"
         android:layout_height="65dp"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/button_play"
         android:layout_marginBottom="24dp"
+        android:background="@drawable/button_play"
         android:checked="true"
-        android:clickable="true"
         android:text=""
         android:textOff=""
         android:textOn=""
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@+id/btnStop"
-        app:layout_constraintRight_toLeftOf="@+id/btnList"/>
+        app:layout_constraintRight_toLeftOf="@+id/btnList" />
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/btnStop"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="24dp"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/ic_stop_circle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/btnStart" />
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/btnList"
         android:layout_width="65dp"
         android:layout_height="65dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/ic_stop_circle"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="24dp"
         app:layout_constraintLeft_toRightOf="@+id/btnStart"
-        app:layout_constraintRight_toRightOf="parent"
-        android:background="@drawable/ic_stop_circle"
-        android:layout_alignParentBottom="true" />
+        app:layout_constraintRight_toRightOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,4 +10,5 @@
 
     <color name="purple">#6A1B9A</color>
     <color name="blue">#1565C0</color>
+    <color name="line">#1e000000</color>
 </resources>
