@@ -20,6 +20,8 @@ import com.kan.codingchallengesfossil3.feature.service.TimerStopService
 import com.kan.codingchallengesfossil3.feature.service.startTimerService
 import com.kan.codingchallengesfossil3.model.StateEvent
 import com.kan.codingchallengesfossil3.utils.TIMER_NOTIF_ID
+import io.realm.Realm
+import io.realm.RealmConfiguration
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -50,6 +52,8 @@ class BaseApplication : Application(), LifecycleObserver {
         INSTANCE = this
         ProcessLifecycleOwner.get().lifecycle.addObserver(this)
         applicationComponent.getEventBus().register(this)
+        Realm.init(this)
+        Realm.setDefaultConfiguration(RealmConfiguration.Builder().build())
     }
 
     override fun onTerminate() {

@@ -2,9 +2,12 @@ package com.kan.codingchallengesfossil3.feature.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.kan.codingchallengesfossil3.data.repository.TimerDataRepository
+import com.kan.codingchallengesfossil3.data.repository.TimerRepository
 import com.kan.codingchallengesfossil3.di.PerActivity
 import com.kan.codingchallengesfossil3.di.ViewModelFactory
 import com.kan.codingchallengesfossil3.di.ViewModelKey
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.multibindings.IntoMap
@@ -15,7 +18,7 @@ import dagger.multibindings.IntoMap
  */
 
 @Module
-class MainModule {
+ class MainModule {
 
     @Provides
     @PerActivity
@@ -29,4 +32,11 @@ class MainModule {
     fun provideMainViewModel(viewModel: MainViewModel): ViewModel {
         return viewModel
     }
+
+    @Provides
+    @PerActivity
+    fun provideTimerRepository(repository: TimerDataRepository): TimerRepository {
+        return repository
+    }
+
 }

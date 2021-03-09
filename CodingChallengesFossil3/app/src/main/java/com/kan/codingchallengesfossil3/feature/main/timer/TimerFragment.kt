@@ -3,15 +3,19 @@ package com.kan.codingchallengesfossil3.feature.main.timer
 import android.os.Bundle
 import android.widget.NumberPicker
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.kan.codingchallengesfossil3.R
 import com.kan.codingchallengesfossil3.base.BaseFragment
+import com.kan.codingchallengesfossil3.data.model.TimerModel
 import com.kan.codingchallengesfossil3.extension.*
+import com.kan.codingchallengesfossil3.feature.dialog.DialogTimerPicker
+import com.kan.codingchallengesfossil3.feature.main.MainActivity
 import com.kan.codingchallengesfossil3.feature.main.MainComponent
 import com.kan.codingchallengesfossil3.feature.main.MainViewModel
 import com.kan.codingchallengesfossil3.feature.navigation.Navigator
 import com.kan.codingchallengesfossil3.model.StateEvent
 import com.kan.codingchallengesfossil3.utils.ResourceUtil
-import kotlinx.android.synthetic.main.fragment_picker.*
+import kotlinx.android.synthetic.main.fragment_timer.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
@@ -20,7 +24,6 @@ import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import javax.inject.Inject
-import kotlin.math.roundToInt
 import kotlin.math.roundToLong
 
 
@@ -36,11 +39,12 @@ class TimerFragment : BaseFragment() {
         const val MAX_PICKTIME = 99
         const val FORMAT_DIGIT = "%02d"
         const val TIME_DURATION = 1000L
+        const val MAX_SETUP = 100000
         fun newInstance(): TimerFragment =
             TimerFragment()
     }
 
-    override fun layoutId() = R.layout.fragment_picker
+    override fun layoutId() = R.layout.fragment_timer
 
     override fun inject() = getComponent(MainComponent::class.java)?.inject(this) ?: Unit
 
@@ -52,16 +56,21 @@ class TimerFragment : BaseFragment() {
 
     private lateinit var mainViewModel: MainViewModel
 
+    private lateinit var timerAdapter: TimerAdapter
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         initViewModel()
         initView()
+        initRecyclerView()
         setListener()
+        mainViewModel.getAllTimer()
     }
 
     private fun initViewModel() {
         mainViewModel = this.viewModel(factory = viewModelFactory) {
             observe(currentTime, ::handleUpdateCurrentTimer)
+            observe(listTimerSetup, ::handleTimesetup)
         }
     }
 
@@ -75,11 +84,57 @@ class TimerFragment : BaseFragment() {
         super.onDestroy()
     }
 
+    fun initRecyclerView() {
+        timerAdapter = TimerAdapter().apply {
+            onItemClick = ::handleItemClick
+        }
+
+        recycleView.apply {
+            layoutManager = LinearLayoutManager(
+                context,
+                LinearLayoutManager.HORIZONTAL, false
+            )
+            adapter = timerAdapter
+        }
+    }
+
+    private fun handleItemClick(data: TimerModel) {
+        data.timerSecond?.also {
+            updateData(it)
+        }
+    }
+
+    private fun updateData(timer: Long) {
+        numberPickerHour.value = (timer / 3600).toInt()
+        numberPickerMinute.value = (timer / 60 % 60).toInt()
+        numberPickerSecond.value = (timer % 60).toInt()
+        mainViewModel.totalSecondTime = timer
+        requireActivity().config.timerSeconds = timer
+    }
+
+    private fun handleTimesetup(data: List<TimerModel>?) {
+        data?.also {
+            timerAdapter.submitList(it)
+        }
+    }
+
     private fun handleUpdateCurrentTimer(data: String?) {
         timerTime.text = data
     }
 
     private fun setListener() {
+
+        btnList.setOnSafeClickListener {
+            DialogTimerPicker(activity as MainActivity, mainViewModel.totalSecondTime) { seconds ->
+                if (mainViewModel.listTimerSetup.value?.firstOrNull {
+                        it.timerSecond == seconds
+                    } == null) {
+                    val id = mainViewModel.listTimerSetup.value?.maxBy { it.id }?.id ?: 0
+                    mainViewModel.insertTimer(TimerModel((id + 1), seconds, ""))
+                }
+                updateData(seconds)
+            }
+        }
 
         btnStop.setOnSafeClickListener {
             stopTimer()
@@ -120,21 +175,25 @@ class TimerFragment : BaseFragment() {
                 rlContentCalendar.invisible()
                 btnStop.visible()
                 llTimerContent.visible()
+                recycleView.gone()
             }
             is StateEvent.Idle -> {
                 rlContentCalendar.visible()
                 btnStop.invisible()
                 llTimerContent.invisible()
                 btnStart.isChecked = false
+                recycleView.visible()
             }
 
             is StateEvent.Paused -> {
                 rlContentCalendar.invisible()
                 btnStop.visible()
                 llTimerContent.visible()
+                recycleView.gone()
                 btnStart.isChecked = true
                 mainViewModel.updateTimer(state.tick.div(1000F).roundToLong())
-                totalTime.text = ResourceUtil.getString(R.string.total, mainViewModel.totalSecondTime)
+                totalTime.text =
+                    ResourceUtil.getString(R.string.total, mainViewModel.totalSecondTime)
                 circularProgressBar.setProgressWithAnimation(
                     state.tick.div(requireActivity().config.timerSeconds.secondsToMillis.toFloat()) * 100,
                     1000
@@ -144,12 +203,14 @@ class TimerFragment : BaseFragment() {
             is StateEvent.Finish -> {
                 rlContentCalendar.invisible()
                 btnStop.invisible()
+                recycleView.gone()
                 llTimerContent.visible()
             }
 
             is StateEvent.Finished -> {
                 rlContentCalendar.visible()
                 llTimerContent.visible()
+                recycleView.visible()
                 btnStop.invisible()
             }
             else -> Unit

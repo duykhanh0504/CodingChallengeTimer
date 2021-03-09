@@ -4,6 +4,7 @@ import android.content.Context
 import com.kan.codingchallengesfossil3.application.BaseApplication
 import com.kan.codingchallengesfossil3.feature.main.setting.SettingActivity
 import dagger.Component
+import io.realm.Realm
 import org.greenrobot.eventbus.EventBus
 import javax.inject.Singleton
 
@@ -40,5 +41,10 @@ interface ApplicationComponent {
      * inject SettingActivity
      */
     fun inject(activity: SettingActivity)
+
+    /**
+     * inject Realm
+     */
+    fun realm(): Realm
 
 }

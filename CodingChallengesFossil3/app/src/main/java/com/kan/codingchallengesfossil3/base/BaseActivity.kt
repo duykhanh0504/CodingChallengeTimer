@@ -196,6 +196,32 @@ abstract class BaseActivity : AppCompatActivity() {
         callback?.invoke()
     }
 
+    fun setupDialogStuff(view: View, dialog: AlertDialog, titleId: Int = 0, titleText: String = "", callback: (() -> Unit)? = null) {
+        if (isDestroyed || isFinishing) {
+            return
+        }
+
+        var title: TextView? = null
+        if (titleId != 0 || titleText.isNotEmpty()) {
+            title = layoutInflater.inflate(R.layout.dialog_title, null) as TextView
+            title.dialog_title_textview.apply {
+                if (titleText.isNotEmpty()) {
+                    text = titleText
+                } else {
+                    setText(titleId)
+                }
+            }
+        }
+
+        dialog.apply {
+            setView(view)
+            requestWindowFeature(Window.FEATURE_NO_TITLE)
+            setCustomTitle(title)
+            setCanceledOnTouchOutside(true)
+            show()
+        }
+        callback?.invoke()
+    }
 
     fun handlePermission(permissionId: Int, callback: (granted: Boolean) -> Unit) {
         actionOnPermission = null
