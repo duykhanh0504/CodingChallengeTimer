@@ -14,4 +14,11 @@
         android:background="@drawable/round_button"
         android:gravity="center_vertical|center_horizontal" />
 
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/deleteTimer"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/ic_delete" />
+
+
 </RelativeLayout>
