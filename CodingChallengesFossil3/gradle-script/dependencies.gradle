@@ -37,6 +37,8 @@ ext {
     daggerLibrary = '2.33'
     junittest = "1.1.1"
     mockitoandroid = "3.1.0"
+    paperparcel ='2.0.4'
+    realm ='4.3.4'
 
     //Support Libraries dependencies
     supportDependencies = [
@@ -95,6 +97,16 @@ ext {
     apiDependencies = [
             gson              : "com.google.code.gson:gson:${gsonLibrary}"
     ]
+
+    //Api Libraries dependencies
+    databaseDependencies = [
+            kaptRealm              : "io.realm:realm-annotations:${realm}",
+            kaptRealmProcessor             : "io.realm:realm-annotations-processor:${realm}",
+            parcel            : "nz.bradcampbell:paperparcel:${paperparcel}",
+            parcelKotlin           : "nz.bradcampbell:paperparcel-kotlin:${paperparcel}",
+            kaptParcel            : "nz.bradcampbell:paperparcel-compiler:${paperparcel}"
+    ]
+
 
     //development Libraries dependencies
     developmentDependencies = [
