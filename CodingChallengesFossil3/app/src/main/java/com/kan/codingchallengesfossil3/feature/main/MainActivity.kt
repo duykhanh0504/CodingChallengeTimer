@@ -55,6 +55,10 @@ class MainActivity : BaseActivity(), HasComponent<MainComponent> {
                 navigator.showMenuActivity(this)
                 true
             }
+            android.R.id.home -> {
+                onBackPressed()
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }

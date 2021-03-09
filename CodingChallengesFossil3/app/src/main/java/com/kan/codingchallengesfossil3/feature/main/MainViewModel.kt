@@ -6,6 +6,7 @@ import com.kan.codingchallengesfossil3.data.model.TimerModel
 import com.kan.codingchallengesfossil3.data.repository.TimerRepository
 import com.kan.codingchallengesfossil3.extension.getFormattedDuration
 import com.kan.codingchallengesfossil3.model.StateEvent
+import com.kan.codingchallengesfossil3.model.TimerModelUI
 import javax.inject.Inject
 
 /**
@@ -23,7 +24,7 @@ class MainViewModel @Inject constructor(
 
     var currentTime: MutableLiveData<String> = MutableLiveData()
 
-    var listTimerSetup: MutableLiveData<List<TimerModel>> = MutableLiveData()
+    var listTimerSetup: MutableLiveData<List<TimerModelUI>> = MutableLiveData()
 
     fun updateTimer(timerTick: Long?) {
         currentTime.value = timerTick?.getFormattedDuration() ?: 0L.getFormattedDuration()
@@ -36,7 +37,11 @@ class MainViewModel @Inject constructor(
     fun getAllTimer() {
         val data = timerRepository.findAllData()
         data?.also {
-            listTimerSetup.value = data
+            val result: ArrayList<TimerModelUI> = ArrayList()
+            it.forEach {
+                result.add(TimerModelUI(it.id, it.timerSecond, it.updateAt))
+            }
+            listTimerSetup.value = result
         }
     }
 

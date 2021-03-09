@@ -9,6 +9,7 @@ import com.kan.codingchallengesfossil3.R
 import com.kan.codingchallengesfossil3.data.model.TimerModel
 import com.kan.codingchallengesfossil3.extension.inflate
 import com.kan.codingchallengesfossil3.extension.setOnSafeClickListener
+import com.kan.codingchallengesfossil3.model.TimerModelUI
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_timer_setup.view.*
 
@@ -21,7 +22,7 @@ class TimerAdapter : RecyclerView.Adapter<TimerAdapter.ItemViewHolder>() {
 
     private val asyncListDiffer = AsyncListDiffer(this, DiffItemCallback())
 
-    var onItemClick: ((TimerModel) -> Unit)? = null
+    var onItemClick: ((TimerModelUI) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         return ItemViewHolder(parent.inflate(R.layout.item_timer_setup))
@@ -33,7 +34,7 @@ class TimerAdapter : RecyclerView.Adapter<TimerAdapter.ItemViewHolder>() {
         holder.bind(asyncListDiffer.currentList[position])
     }
 
-    fun submitList(elements: List<TimerModel>) {
+    fun submitList(elements: List<TimerModelUI>) {
         asyncListDiffer.submitList(elements)
     }
 
@@ -41,13 +42,13 @@ class TimerAdapter : RecyclerView.Adapter<TimerAdapter.ItemViewHolder>() {
         override val containerView: View
     ) : RecyclerView.ViewHolder(containerView), LayoutContainer {
 
-        private lateinit var timerModel: TimerModel
+        private lateinit var timerModel: TimerModelUI
 
         init {
 
         }
 
-        fun bind(timerModel: TimerModel) {
+        fun bind(timerModel: TimerModelUI) {
             this.timerModel = timerModel
             containerView.timer.text = timerModel.timerSecond.toString()
 
@@ -58,12 +59,12 @@ class TimerAdapter : RecyclerView.Adapter<TimerAdapter.ItemViewHolder>() {
 
     }
 
-    inner class DiffItemCallback : DiffUtil.ItemCallback<TimerModel>() {
-        override fun areItemsTheSame(oldItem: TimerModel, newItem: TimerModel): Boolean {
+    inner class DiffItemCallback : DiffUtil.ItemCallback<TimerModelUI>() {
+        override fun areItemsTheSame(oldItem: TimerModelUI, newItem: TimerModelUI): Boolean {
             return oldItem.id == newItem.id
         }
 
-        override fun areContentsTheSame(oldItem: TimerModel, newItem: TimerModel): Boolean {
+        override fun areContentsTheSame(oldItem: TimerModelUI, newItem: TimerModelUI): Boolean {
             return (oldItem.id == newItem.id) && (oldItem.updateAt == newItem.updateAt)
         }
     }

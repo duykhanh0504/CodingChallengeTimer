@@ -14,6 +14,7 @@ import com.kan.codingchallengesfossil3.feature.main.MainComponent
 import com.kan.codingchallengesfossil3.feature.main.MainViewModel
 import com.kan.codingchallengesfossil3.feature.navigation.Navigator
 import com.kan.codingchallengesfossil3.model.StateEvent
+import com.kan.codingchallengesfossil3.model.TimerModelUI
 import com.kan.codingchallengesfossil3.utils.ResourceUtil
 import kotlinx.android.synthetic.main.fragment_timer.*
 import kotlinx.coroutines.Dispatchers
@@ -25,7 +26,6 @@ import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import javax.inject.Inject
 import kotlin.math.roundToLong
-
 
 /**
  * Created by Kan on 3/8/21
@@ -98,11 +98,12 @@ class TimerFragment : BaseFragment() {
         }
     }
 
-    private fun handleItemClick(data: TimerModel) {
+    private fun handleItemClick(data: TimerModelUI) {
         data.timerSecond?.also {
             updateData(it)
         }
     }
+
 
     private fun updateData(timer: Long) {
         numberPickerHour.value = (timer / 3600).toInt()
@@ -112,7 +113,7 @@ class TimerFragment : BaseFragment() {
         requireActivity().config.timerSeconds = timer
     }
 
-    private fun handleTimesetup(data: List<TimerModel>?) {
+    private fun handleTimesetup(data: List<TimerModelUI>?) {
         data?.also {
             timerAdapter.submitList(it)
         }
@@ -126,11 +127,28 @@ class TimerFragment : BaseFragment() {
 
         btnList.setOnSafeClickListener {
             DialogTimerPicker(activity as MainActivity, mainViewModel.totalSecondTime) { seconds ->
+                if (seconds <= 0) {
+                    baseActivity()?.notify(main, getString(R.string.zero_value_notify))
+                    return@DialogTimerPicker
+                }
                 if (mainViewModel.listTimerSetup.value?.firstOrNull {
                         it.timerSecond == seconds
                     } == null) {
                     val id = mainViewModel.listTimerSetup.value?.maxBy { it.id }?.id ?: 0
-                    mainViewModel.insertTimer(TimerModel((id + 1), seconds, ""))
+                    val timerData = TimerModel((id + 1), seconds, "")
+                    mainViewModel.insertTimer(timerData)
+                    val newList: ArrayList<TimerModelUI> = ArrayList()
+                    newList.addAll(mainViewModel.listTimerSetup.value ?: emptyList())
+                    newList.add(
+                        TimerModelUI(
+                            timerData.id,
+                            timerData.timerSecond,
+                            timerData.updateAt
+                        )
+                    )
+                    timerAdapter.submitList(newList.toList())
+                } else {
+                    baseActivity()?.notify(main, getString(R.string.timer_exits))
                 }
                 updateData(seconds)
             }
@@ -148,6 +166,10 @@ class TimerFragment : BaseFragment() {
             val minutes = numberPickerMinute.value
             val seconds = numberPickerSecond.value
             val totalSecond = (hours * 3600 + minutes * 60 + seconds).toLong()
+            if (totalSecond <= 0) {
+                baseActivity()?.notify(main, getString(R.string.zero_value_notify))
+                return@setOnSafeClickListener
+            }
             requireActivity().config.timerSeconds = totalSecond
             totalTime.text = ResourceUtil.getString(R.string.total, totalSecond)
             mainViewModel.totalSecondTime = totalSecond

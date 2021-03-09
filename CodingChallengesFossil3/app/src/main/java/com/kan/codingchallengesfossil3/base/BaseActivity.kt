@@ -11,6 +11,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
+import com.google.android.material.snackbar.Snackbar
 import com.kan.codingchallengesfossil3.R
 import com.kan.codingchallengesfossil3.application.BaseApplication
 import com.kan.codingchallengesfossil3.di.ApplicationComponent
@@ -222,6 +223,10 @@ abstract class BaseActivity : AppCompatActivity() {
         }
         callback?.invoke()
     }
+
+
+    internal fun notify(view: View, message: String) =
+        Snackbar.make(view, message, Snackbar.LENGTH_SHORT).show()
 
     fun handlePermission(permissionId: Int, callback: (granted: Boolean) -> Unit) {
         actionOnPermission = null

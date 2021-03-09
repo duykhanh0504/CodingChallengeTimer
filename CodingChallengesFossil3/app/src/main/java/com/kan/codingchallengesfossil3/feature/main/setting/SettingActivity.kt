@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.media.AudioManager
 import android.os.Bundle
+import android.view.MenuItem
 import com.kan.codingchallengesfossil3.R
 import com.kan.codingchallengesfossil3.base.BaseActivity
 import com.kan.codingchallengesfossil3.extension.*
@@ -43,6 +44,19 @@ class SettingActivity : BaseActivity() {
 
     private fun initView() {
         switchVibrate.isChecked = config.timerVibrate
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setTitle(R.string.setting)
+    }
+
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     private fun setListener() {

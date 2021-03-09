@@ -66,7 +66,7 @@ constructor(private val realmProvider: Realm) : TimerRepository {
     }
 
     override fun save(data: TimerModel) {
-        realmProvider.executeTransaction { r -> r.copyToRealmOrUpdate(data) }
+        realmProvider.executeTransactionAsync() { r -> r.copyToRealmOrUpdate(data) }
     }
 
     override fun delete(data: TimerModel) {
