@@ -28,7 +28,7 @@ class Config() {
         set(state) = UserPreferences.TIMER_STATE.set(gson.toJson(StateWrapper(state)))
 
     var timerVibrate: Boolean
-        get() = UserPreferences.TIMER_VIBRATE.getBoolean(false)
+        get() = UserPreferences.TIMER_VIBRATE.getBoolean(true)
         set(timerVibrate) = UserPreferences.TIMER_VIBRATE.set(timerVibrate)
 
     var timerChannelId: String
