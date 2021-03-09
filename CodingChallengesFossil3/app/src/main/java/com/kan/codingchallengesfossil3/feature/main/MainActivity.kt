@@ -41,7 +41,6 @@ class MainActivity : BaseActivity(), HasComponent<MainComponent> {
         super.onCreate(savedInstanceState)
         initViewModel()
         initView()
-        initListener()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -51,19 +50,18 @@ class MainActivity : BaseActivity(), HasComponent<MainComponent> {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.getItemId()) {
+        return when (item.itemId) {
             R.id.timer_settings -> {
+                navigator.showMenuActivity(this)
+                true
+            }
+            android.R.id.home -> {
+                onBackPressed()
                 true
             }
             else -> super.onOptionsItemSelected(item)
         }
     }
-
-    private fun initListener() {
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        navigator.showPickerFragment(this, R.id.flMainFragment)
-    }
-
 
     private fun initView() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)

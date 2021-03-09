@@ -17,10 +17,8 @@ import com.kan.codingchallengesfossil3.extension.getFormattedDuration
 import com.kan.codingchallengesfossil3.extension.getOpenTimerTabIntent
 import com.kan.codingchallengesfossil3.model.StateEvent
 import com.kan.codingchallengesfossil3.utils.CHANNEL_ID
-import com.kan.codingchallengesfossil3.utils.TIMER_NOTIF_ID
 import com.kan.codingchallengesfossil3.utils.TIMER_RUNNING_NOTIF_ID
 import com.kan.codingchallengesfossil3.utils.isOreoPlus
-import kotlinx.android.synthetic.main.fragment_picker.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode

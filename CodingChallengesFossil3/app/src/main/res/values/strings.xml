@@ -5,4 +5,18 @@
     <string name="timer">Timer</string>
     <string name="time_expired">Time Expired</string>
     <string name="dismiss">Dismiss</string>
+    <string name="total_one">Total %s second</string>
+    <string name="total">Total %s seconds</string>
+    <string name="vibrate">Vibrate</string>
+    <string name="setup_sound">Select Sound</string>
+    <string name="silent">Silent</string>
+    <string name="alarm">Alarm</string>
+    <string name="your_sounds">Your Sounds</string>
+    <string name="system_sounds">System Sound</string>
+
+    <string name="setting">Setting</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">OK</string>
+    <string name="timer_exits">Timer already exists</string>
+    <string name="zero_value_notify">The value must be greater than zero</string>
 </resources>

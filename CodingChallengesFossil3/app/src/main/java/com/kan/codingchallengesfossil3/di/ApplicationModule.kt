@@ -6,6 +6,7 @@ import com.kan.codingchallengesfossil3.feature.navigation.Navigator
 import dagger.Component
 import dagger.Module
 import dagger.Provides
+import io.realm.Realm
 import org.greenrobot.eventbus.EventBus
 import javax.inject.Singleton
 
@@ -42,4 +43,6 @@ open class ApplicationModule(private val application: BaseApplication) {
         return EventBus.getDefault()
     }
 
+    @Provides
+    internal fun provideRealm(): Realm = Realm.getDefaultInstance()
 }

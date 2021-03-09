@@ -20,6 +20,8 @@ import com.kan.codingchallengesfossil3.feature.service.TimerStopService
 import com.kan.codingchallengesfossil3.feature.service.startTimerService
 import com.kan.codingchallengesfossil3.model.StateEvent
 import com.kan.codingchallengesfossil3.utils.TIMER_NOTIF_ID
+import io.realm.Realm
+import io.realm.RealmConfiguration
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -50,6 +52,8 @@ class BaseApplication : Application(), LifecycleObserver {
         INSTANCE = this
         ProcessLifecycleOwner.get().lifecycle.addObserver(this)
         applicationComponent.getEventBus().register(this)
+        Realm.init(this)
+        Realm.setDefaultConfiguration(RealmConfiguration.Builder().build())
     }
 
     override fun onTerminate() {
@@ -94,7 +98,7 @@ class BaseApplication : Application(), LifecycleObserver {
 
     fun handleFinish(event: StateEvent.Finish) {
         val pendingIntent = getOpenTimerTabIntent()
-        val notification = getTimerNotification(pendingIntent, false)
+        val notification = getTimerNotification(pendingIntent)
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.notify(TIMER_NOTIF_ID, notification)
 
@@ -102,7 +106,7 @@ class BaseApplication : Application(), LifecycleObserver {
     }
 
     fun handleFinished(state: StateEvent.Finished) {
-        config.timerState = state
+        config.timerState = StateEvent.Idle
     }
 
     fun handlePause(event: StateEvent.Pause) {

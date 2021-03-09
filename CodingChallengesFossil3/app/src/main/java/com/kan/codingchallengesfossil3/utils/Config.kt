@@ -2,7 +2,7 @@ package com.kan.codingchallengesfossil3.utils
 
 import android.content.Context
 import com.kan.codingchallengesfossil3.extension.UserPreferences
-import com.kan.codingchallengesfossil3.extension.empty
+
 import com.kan.codingchallengesfossil3.extension.gson.gson
 import com.kan.codingchallengesfossil3.model.StateEvent
 import com.kan.codingchallengesfossil3.model.StateWrapper
@@ -12,9 +12,9 @@ import com.kan.codingchallengesfossil3.model.StateWrapper
  * Copyright © 2018 Money Forward, Inc. All rights
  */
 
-class Config(context: Context) {
+class Config() {
     companion object {
-        fun newInstance(context: Context) = Config(context)
+        fun newInstance() = Config()
     }
 
     var timerSeconds: Long

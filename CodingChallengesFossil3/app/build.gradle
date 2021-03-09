@@ -3,6 +3,7 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-android-extensions'
     id 'kotlin-kapt'
+    id 'realm-android'
 }
 
 android {
@@ -69,4 +70,11 @@ dependencies {
     androidTestImplementation unitTestDependencies.mockito
 
     debugImplementation developmentDependencies.leakCanary
+
+    implementation databaseDependencies.parcel
+    implementation databaseDependencies.parcelKotlin
+    kapt databaseDependencies.kaptParcel
+
+    kapt databaseDependencies.kaptRealmProcessor
+    kapt databaseDependencies.kaptRealm
 }

@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit
  * Copyright © 2018 Money Forward, Inc. All rights
  */
 
-fun Long.getFormattedDuration(forceShowHours: Boolean = false): String {
+fun Long.getFormattedDuration(): String {
     val sb = StringBuilder(8)
     val hours = this / 3600
     val minutes = this % 3600 / 60

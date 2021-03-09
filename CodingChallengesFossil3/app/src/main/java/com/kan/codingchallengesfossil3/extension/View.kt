@@ -1,6 +1,9 @@
 package com.kan.codingchallengesfossil3.extension
 
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import androidx.annotation.LayoutRes
 
 /**
  * Created by Kan on 3/8/21
@@ -21,3 +24,6 @@ fun View.invisible() {
 fun View.gone() {
     this.visibility = View.GONE
 }
+
+fun ViewGroup.inflate(@LayoutRes layoutRes: Int): View =
+    LayoutInflater.from(context).inflate(layoutRes, this, false)
