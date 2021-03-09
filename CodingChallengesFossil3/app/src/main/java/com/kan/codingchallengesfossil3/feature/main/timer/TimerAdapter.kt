@@ -23,6 +23,7 @@ class TimerAdapter : RecyclerView.Adapter<TimerAdapter.ItemViewHolder>() {
     private val asyncListDiffer = AsyncListDiffer(this, DiffItemCallback())
 
     var onItemClick: ((TimerModelUI) -> Unit)? = null
+    var onItemDelete: ((TimerModelUI) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         return ItemViewHolder(parent.inflate(R.layout.item_timer_setup))
@@ -54,6 +55,10 @@ class TimerAdapter : RecyclerView.Adapter<TimerAdapter.ItemViewHolder>() {
 
             containerView.timer.setOnSafeClickListener {
                 onItemClick?.invoke(timerModel)
+            }
+
+            containerView.deleteTimer.setOnSafeClickListener {
+                onItemDelete?.invoke(timerModel)
             }
         }
 

@@ -34,6 +34,10 @@ class MainViewModel @Inject constructor(
         timerRepository.save(data)
     }
 
+    fun deleteTimer(data: TimerModel) {
+        timerRepository.delete(data)
+    }
+
     fun getAllTimer() {
         val data = timerRepository.findAllData()
         data?.also {

@@ -87,6 +87,7 @@ class TimerFragment : BaseFragment() {
     fun initRecyclerView() {
         timerAdapter = TimerAdapter().apply {
             onItemClick = ::handleItemClick
+            onItemDelete = ::handleItemDelete
         }
 
         recycleView.apply {
@@ -96,6 +97,14 @@ class TimerFragment : BaseFragment() {
             )
             adapter = timerAdapter
         }
+    }
+
+    private fun handleItemDelete(data: TimerModelUI) {
+        mainViewModel.deleteTimer(TimerModel(data.id, data.timerSecond, data.updateAt))
+        val newList: ArrayList<TimerModelUI> = ArrayList()
+        newList.addAll(mainViewModel.listTimerSetup.value ?: emptyList())
+        newList.remove(data)
+        mainViewModel.listTimerSetup.postValue(newList)
     }
 
     private fun handleItemClick(data: TimerModelUI) {
@@ -146,7 +155,7 @@ class TimerFragment : BaseFragment() {
                             timerData.updateAt
                         )
                     )
-                    timerAdapter.submitList(newList.toList())
+                    mainViewModel.listTimerSetup.postValue(newList)
                 } else {
                     baseActivity()?.notify(main, getString(R.string.timer_exits))
                 }
